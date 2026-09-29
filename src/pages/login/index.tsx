@@ -20,7 +20,6 @@ export function Login() {
 
     signInWithEmailAndPassword(auth, email, password)
     .then(() => {
-      console.log("Usuário logado com sucesso!");
       navigate("/admin", { replace: true });
     })
     .catch((error) => {
