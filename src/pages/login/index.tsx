@@ -1,14 +1,31 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
 import { useState, type SubmitEvent } from "react";
+import { auth } from "../../services/firebaseConnection";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 export function Login() {
   const [ email, setEmail] = useState("");
   const [ password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (email === "" || password === "") {
+      alert("Preencha todos os campos!");
+      return;
+    }
+
+    signInWithEmailAndPassword(auth, email, password)
+    .then(() => {
+      console.log("Usuário logado com sucesso!");
+      navigate("/admin", { replace: true });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   }
 
   return (
