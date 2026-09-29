@@ -1,7 +1,9 @@
+import { Header } from "../../components/Header";
+
 export function Admin() {
   return (
-    <div>
-      <h1>Admin</h1>
+    <div className="flex w-full min-h-screen items-center flex-col">
+      <Header />
     </div>
   );
 }
