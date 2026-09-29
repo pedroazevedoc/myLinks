@@ -1,5 +1,5 @@
 import { SiGmail, SiInstagram } from "react-icons/si";
-import { Social } from "../../components/social";
+import { Social } from "../../components/Social";
 
 const linksMock = [
   {
