@@ -3,6 +3,7 @@ import { Header } from "../../components/Header";
 import { Input } from "../../components/Input";
 import { Label } from "../../components/Label";
 import { Button } from "../../components/Button";
+import { BiTrash } from "react-icons/bi";
 
 export function Admin() {
   const [ nameInput, setNameInput] = useState("");
@@ -78,6 +79,20 @@ export function Admin() {
           Cadastrar
         </Button>
       </form>
+
+      <h2 className="text-xl font-bold text-mauve-200 mt-8">
+        Meus links
+      </h2>
+      <article 
+        className="flex items-center justify-between w-full max-w-sm mt-4 bg-mauve-500 rounded-lg px-2 py-1 select-none"
+      >
+        <p>GitHub</p>
+        <div>
+          <Button>
+            <BiTrash  size={18} />
+          </Button>
+        </div>
+      </article>
     </div>
   );
 }
