@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Header } from "../../components/Header";
 import { Input } from "../../components/Input";
 import { Label } from "../../components/Label";
+import { Button } from "../../components/Button";
 
 export function Admin() {
   const [ nameInput, setNameInput] = useState("");
@@ -56,19 +57,26 @@ export function Admin() {
         </section>
 
         {/* Preview do link */}
-        <div className="flex flex-col w-full items-center justify-center border border-mauve-500 rounded-lg p-4 mt-4">
-          <Label>Preview do link:</Label>
-          <article 
-            className="w-full h-10 flex items-center justify-center rounded-lg mt-2"
-            style={{ 
-              backgroundColor: backgroundColorInput
-            }}
-          >
-            <p style={{ color: textColorInput }}>
-              {nameInput || "Nome do link"}
-            </p>
-          </article>
-        </div>
+        {nameInput && urlInput && (
+          <div className="flex flex-col w-full items-center justify-center border border-mauve-500 rounded-lg p-4 mt-4 mb-6">
+            <Label>Preview do link:</Label>
+            <article 
+              className="w-full h-10 flex items-center justify-center rounded-lg mt-2"
+              style={{ 
+                backgroundColor: backgroundColorInput
+              }}
+            >
+              <p style={{ color: textColorInput }}>
+                {nameInput || "Nome do link"}
+              </p>
+            </article>
+          </div>
+        )}
+
+        {/* Botão para salvar o link */}
+        <Button type="submit" disabled={!nameInput || !urlInput}>
+          Cadastrar
+        </Button>
       </form>
     </div>
   );
