@@ -16,7 +16,11 @@ export function Admin() {
       <Header />
 
       <form className="flex flex-col w-full max-w-sm space-y-3 mt-10">
-        {/* Nome e URL do link */}
+        <h2 className="flex justify-center text-xl font-bold text-mauve-200">
+          Cadastrar link
+        </h2>
+
+        {/* Nome */}
         <div>
           <Label>Nome do link</Label>
           <Input 
@@ -26,6 +30,8 @@ export function Admin() {
             onChange={(e) => setNameInput(e.target.value)}
           />
         </div>
+
+        {/* URL */}
         <div>
           <Label>URL do link</Label>
           <Input 
