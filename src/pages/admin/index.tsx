@@ -22,7 +22,7 @@ export function Admin() {
 
         {/* Nome */}
         <div>
-          <Label>Nome do link</Label>
+          <Label isRequired>Nome do link</Label>
           <Input 
             type="text"
             placeholder="Digite o nome do link"
@@ -33,7 +33,7 @@ export function Admin() {
 
         {/* URL */}
         <div>
-          <Label>URL do link</Label>
+          <Label isRequired>URL do link</Label>
           <Input 
             type="url"
             placeholder="Digite a URL do link"

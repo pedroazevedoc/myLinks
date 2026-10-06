@@ -1,7 +1,12 @@
-export function Label({ children }: { children: React.ReactNode }) {
+interface LabelProps {
+  children: React.ReactNode;
+  isRequired?: boolean;
+}
+
+export function Label({ children, isRequired }: LabelProps) {
   return (
     <label className="text-mauve-200 font-semibold text-sm mb-1">
-      {children}
+      {children} {isRequired && <span className="text-red-500">*</span>}
     </label>
   );
 }
