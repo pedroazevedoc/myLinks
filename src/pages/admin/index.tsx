@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, type SubmitEvent } from "react";
 import { Header } from "../../components/Header";
 import { Input } from "../../components/Input";
 import { Label } from "../../components/Label";
 import { Button } from "../../components/Button";
 import { BiTrash } from "react-icons/bi";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../../services/firebaseConnection";
 
 export function Admin() {
   const [ nameInput, setNameInput] = useState("");
@@ -11,11 +13,45 @@ export function Admin() {
   const [ textColorInput, setTextColorInput] = useState("#ffffff");
   const [ backgroundColorInput, setBackgroundColorInput] = useState("#000000");
 
+  // Função para lidar com o envio do formulário
+  const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
+    try {
+      e.preventDefault();
+  
+      // Validação para garantir que os campos obrigatórios foram preenchidos
+      if (!nameInput || !urlInput) {
+        alert("Por favor, preencha todos os campos obrigatórios.");
+        return;
+      }
+  
+      // Lógica para lidar com o envio do formulário
+      await addDoc(collection(db, "links"), {
+        name: nameInput,
+        url: urlInput,
+        textColor: textColorInput,
+        backgroundColor: backgroundColorInput,
+        created_at: new Date(),
+        updated_at: new Date()
+      });
+
+      // Limpar os campos do formulário após o envio bem-sucedido
+      setNameInput("");
+      setUrlInput("");
+      setTextColorInput("#ffffff");
+      setBackgroundColorInput("#000000");
+
+      alert("Link cadastrado com sucesso!");
+    } catch (error) {
+      console.error("Erro ao cadastrar link:", error);
+      alert("Ocorreu um erro ao cadastrar o link. Por favor, tente novamente.");
+    }
+  }
+
   return (
     <div className="flex w-full min-h-screen items-center flex-col">
       <Header />
 
-      <form className="flex flex-col w-full max-w-sm space-y-3 mt-10">
+      <form onSubmit={handleSubmit} className="flex flex-col w-full max-w-sm space-y-3 mt-10">
         <h2 className="flex justify-center text-xl font-bold text-mauve-200">
           Cadastrar link
         </h2>
