@@ -4,7 +4,7 @@ import { Input } from "../../components/Input";
 import { Label } from "../../components/Label";
 import { Button } from "../../components/Button";
 import { BiTrash } from "react-icons/bi";
-import { addDoc, collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, onSnapshot, orderBy, query } from "firebase/firestore";
 import { db } from "../../services/firebaseConnection";
 
 interface LinkProps {
@@ -76,6 +76,19 @@ export function Admin() {
     } catch (error) {
       console.error("Erro ao cadastrar link:", error);
       alert("Ocorreu um erro ao cadastrar o link. Por favor, tente novamente.");
+    }
+  }
+
+  // Função para lidar com a exclusão de um link
+  const handleDelete = async (linkId: string) => {
+    try {
+      if (!linkId) return;
+      await deleteDoc(doc(db, "links", linkId));
+
+      alert("Link excluído com sucesso!");
+    } catch (error) {
+      console.error("Erro ao excluir link:", error);
+      alert("Ocorreu um erro ao excluir o link. Por favor, tente novamente.");
     }
   }
 
@@ -157,16 +170,23 @@ export function Admin() {
       <h2 className="text-xl font-bold text-mauve-200 mt-8">
         Meus links
       </h2>
-      <article 
-        className="flex items-center justify-between w-full max-w-sm mt-4 bg-mauve-500 rounded-lg px-2 py-1 select-none"
-      >
-        <p>GitHub</p>
-        <div>
-          <Button>
-            <BiTrash  size={18} />
-          </Button>
-        </div>
-      </article>
+      {links.map((link) => (
+        <article 
+          key={link.id}
+          className="flex items-center justify-between w-full max-w-sm mt-4 bg-mauve-500 rounded-lg px-2 py-1 select-none"
+          style={{
+            backgroundColor: link.backgroundColor,
+            color: link.textColor
+          }}
+        >
+          <p>{link.name}</p>
+          <div>
+            <Button onClick={() => handleDelete(link.id)}>
+              <BiTrash size={18} />
+            </Button>
+          </div>
+        </article>
+      ))}
     </div>
   );
 }
