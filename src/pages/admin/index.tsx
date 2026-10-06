@@ -6,16 +6,7 @@ import { Button } from "../../components/Button";
 import { BiTrash } from "react-icons/bi";
 import { addDoc, collection, deleteDoc, doc, onSnapshot, orderBy, query } from "firebase/firestore";
 import { db } from "../../services/firebaseConnection";
-
-interface LinkProps {
-  id: string;
-  name: string;
-  url: string;
-  textColor: string;
-  backgroundColor: string;
-  created_at: Date;
-  updated_at: Date;
-}
+import type { LinkProps } from "../../types";
 
 export function Admin() {
   const [ links, setLinks ] = useState<LinkProps[]>([]);
