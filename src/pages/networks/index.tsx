@@ -1,11 +1,11 @@
-import { useState, type SubmitEvent } from "react";
+import { useEffect, useState, type SubmitEvent } from "react";
 import { Header } from "../../components/Header";
 import { Input } from "../../components/Input";
 import { Label } from "../../components/Label";
 import { Button } from "../../components/Button";
 import { FaLink } from "react-icons/fa";
 import { db } from "../../services/firebaseConnection";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 
 export function Networks() {
   const [ inputs, setInputs ] = useState({
@@ -14,6 +14,26 @@ export function Networks() {
     twitter: "",
     youtube: ""
   });
+
+  // Obtem os links
+  useEffect(() => {
+    const fetchLinks = async () => {
+      try {
+        const docRef = doc(db, "networks", "links");
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          setInputs(docSnap.data() as typeof inputs);
+        } else {
+          console.log("Nenhum documento encontrado!");
+        }
+      } catch (error) {
+        console.error("Erro ao buscar links:", error);
+      }
+    };
+
+    fetchLinks();
+  }, []);
 
   // Cria/Atualiza os links
   const handleSave = async (e: SubmitEvent<HTMLFormElement>) => {
@@ -32,14 +52,6 @@ export function Networks() {
         facebook: inputs.facebook,
         twitter: inputs.twitter,
         youtube: inputs.youtube
-      });
-
-      // Limpar os campos após o envio bem-sucedido
-      setInputs({
-        instagram: "",
-        facebook: "",
-        twitter: "",
-        youtube: ""
       });
 
       alert("Links salvos com sucesso!");
