@@ -6,9 +6,10 @@ import { Button } from "../../components/Button";
 import { FaLink } from "react-icons/fa";
 import { db } from "../../services/firebaseConnection";
 import { doc, setDoc, getDoc } from "firebase/firestore";
+import type { NetworkProps } from "../../types";
 
 export function Networks() {
-  const [ inputs, setInputs ] = useState({
+  const [ inputs, setInputs ] = useState<NetworkProps>({
     instagram: "",
     facebook: "",
     twitter: "",
