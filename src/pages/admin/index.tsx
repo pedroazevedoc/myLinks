@@ -1,17 +1,49 @@
-import { useState, type SubmitEvent } from "react";
+import { useEffect, useState, type SubmitEvent } from "react";
 import { Header } from "../../components/Header";
 import { Input } from "../../components/Input";
 import { Label } from "../../components/Label";
 import { Button } from "../../components/Button";
 import { BiTrash } from "react-icons/bi";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { db } from "../../services/firebaseConnection";
 
+interface LinkProps {
+  id: string;
+  name: string;
+  url: string;
+  textColor: string;
+  backgroundColor: string;
+  created_at: Date;
+  updated_at: Date;
+}
+
 export function Admin() {
+  const [ links, setLinks ] = useState<LinkProps[]>([]);
   const [ nameInput, setNameInput] = useState("");
   const [ urlInput, setUrlInput] = useState("");
   const [ textColorInput, setTextColorInput] = useState("#ffffff");
   const [ backgroundColorInput, setBackgroundColorInput] = useState("#000000");
+
+  // Função para buscar os links do Firestore
+  useEffect(() => {
+    const linksRef = collection(db, "links");
+    const queryRef = query(linksRef, orderBy("created_at", "desc"));
+
+    const unsubscribe = onSnapshot(queryRef, (snapshot) => {
+      let linksList: LinkProps[] = [];
+
+      snapshot.forEach((doc) => {
+        linksList.push({
+          id: doc.id,
+          ...doc.data()
+        } as LinkProps);
+      })
+
+      setLinks(linksList);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   // Função para lidar com o envio do formulário
   const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
