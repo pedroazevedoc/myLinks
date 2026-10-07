@@ -9,6 +9,7 @@ import { db } from "../../services/firebaseConnection";
 import type { LinkProps } from "../../types";
 
 export function Admin() {
+  const [ isLoading, setIsLoading ] = useState(false);
   const [ links, setLinks ] = useState<LinkProps[]>([]);
   const [ nameInput, setNameInput] = useState("");
   const [ urlInput, setUrlInput] = useState("");
@@ -19,6 +20,7 @@ export function Admin() {
   useEffect(() => {
     const linksRef = collection(db, "links");
     const queryRef = query(linksRef, orderBy("created_at", "desc"));
+    setIsLoading(true);
 
     const unsubscribe = onSnapshot(queryRef, (snapshot) => {
       let linksList: LinkProps[] = [];
@@ -31,6 +33,7 @@ export function Admin() {
       })
 
       setLinks(linksList);
+      setIsLoading(false);
     });
 
     return () => unsubscribe();
@@ -161,23 +164,29 @@ export function Admin() {
       <h2 className="text-xl font-bold text-mauve-200 mt-8">
         Meus links
       </h2>
-      {links.map((link) => (
-        <article 
-          key={link.id}
-          className="flex items-center justify-between w-full max-w-sm mt-4 bg-mauve-500 rounded-lg px-2 py-1 select-none"
-          style={{
-            backgroundColor: link.backgroundColor,
-            color: link.textColor
-          }}
-        >
-          <p>{link.name}</p>
-          <div>
-            <Button onClick={() => handleDelete(link.id)}>
-              <BiTrash size={18} />
-            </Button>
-          </div>
-        </article>
-      ))}
+      {isLoading ? (
+        <span className="text-mauve-200 text-lg mt-4">Carregando links...</span>
+      ) : (
+        <>
+          {links.map((link) => (
+            <article 
+              key={link.id}
+              className="flex items-center justify-between w-full max-w-sm mt-4 bg-mauve-500 rounded-lg px-2 py-1 select-none"
+              style={{
+                backgroundColor: link.backgroundColor,
+                color: link.textColor
+              }}
+            >
+              <p>{link.name}</p>
+              <div>
+                <Button onClick={() => handleDelete(link.id)}>
+                  <BiTrash size={18} />
+                </Button>
+              </div>
+            </article>
+          ))}
+        </>
+      )}
     </div>
   );
 }
