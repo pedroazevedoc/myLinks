@@ -24,6 +24,7 @@ export function Login() {
     })
     .catch((error) => {
       console.log(error);
+      alert("Erro ao tentar fazer login. Verifique suas credenciais.");
     });
   }
 
