@@ -14,3 +14,8 @@ export interface NetworkProps {
   twitter: string;
   youtube: string;
 }
+
+export interface SocialProps {
+  name: string;
+  url: string;
+}
