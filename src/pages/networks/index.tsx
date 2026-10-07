@@ -41,12 +41,6 @@ export function Networks() {
     try {
       e.preventDefault();
 
-      // Validação para garantir que os campos obrigatórios foram preenchidos
-      if (!inputs.instagram || !inputs.facebook || !inputs.twitter || !inputs.youtube) {
-        alert("Por favor, preencha todos os campos obrigatórios.");
-        return;
-      }
-
       // Lógica para lidar com o envio do formulário
       await setDoc(doc(db, "networks", "links"), {
         instagram: inputs.instagram,
@@ -116,7 +110,7 @@ export function Networks() {
         </div>
 
         {/* Botão para salvar o link */}
-        <Button type="submit" disabled={!inputs.instagram || !inputs.facebook || !inputs.twitter || !inputs.youtube}>
+        <Button type="submit">
           Salvar
           <FaLink size={14} />
         </Button>
