@@ -10,12 +10,16 @@ const networksIconsMap = {
 };
 
 export function Social({ ...props }: SocialProps) {
+  if (!props.name || !props.url) {
+    return null; // Retorna null se name ou url não estiverem definidos
+  }
+
   return (
     <a 
       key={props.name}
-      href={props.url}
-      target="_blank"
-      rel="noopener noreferrer"
+      href={props.name === "email" ? `mailto:${props.url}` : props.url}
+      target={props.name === "email" ? undefined : "_blank"}
+      rel={props.name === "email" ? undefined : "noreferrer"}
       className="text-mauve-200 transition-transform hover:scale-120 hover:text-mauve-300"
     >
       {networksIconsMap[props.name as keyof typeof networksIconsMap] || null}
