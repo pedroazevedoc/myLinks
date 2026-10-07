@@ -14,19 +14,15 @@ export function Home() {
   const [ networks, setNetworks ] = useState<NetworkProps>();
 
   useEffect(() => {
-    setIsLoading({
-      links: true,
-      networks: true
-    });
-
     const fetchLinks = async () => {
       try {
+        setIsLoading((prev) => ({ ...prev, links: true }));
         const linksRef = collection(db, "links");
         const queryRef = query(linksRef, orderBy("created_at", "desc"));
 
         const linksCollection = await getDocs(queryRef);
 
-        let linksData: LinkProps[] = linksCollection.docs.map((doc) => ({
+        const linksData: LinkProps[] = linksCollection.docs.map((doc) => ({
           id: doc.id,
           ...doc.data()
         } as LinkProps));
@@ -40,6 +36,7 @@ export function Home() {
 
     const fetchNetworks = async () => {
       try {
+        setIsLoading((prev) => ({ ...prev, networks: true }));
         const networksRef = doc(db, "networks", "links");
         const networksCollection = await getDoc(networksRef);
 
