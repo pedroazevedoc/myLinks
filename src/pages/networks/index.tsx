@@ -13,7 +13,10 @@ export function Networks() {
     instagram: "",
     facebook: "",
     twitter: "",
-    youtube: ""
+    youtube: "",
+    email: "",
+    github: "",
+    linkedin: ""
   });
 
   // Obtem os links
@@ -46,7 +49,10 @@ export function Networks() {
         instagram: inputs.instagram,
         facebook: inputs.facebook,
         twitter: inputs.twitter,
-        youtube: inputs.youtube
+        youtube: inputs.youtube,
+        email: inputs.email,
+        github: inputs.github,
+        linkedin: inputs.linkedin
       });
 
       alert("Links salvos com sucesso!");
@@ -65,6 +71,28 @@ export function Networks() {
           Redes Sociais
         </h2>
 
+        {/* Email */}
+        <div>
+          <Label>Email</Label>
+          <Input 
+            type="email"
+            placeholder="Digite o endereço de email"
+            value={inputs.email}
+            onChange={(e) => setInputs({...inputs, email: e.target.value})}
+          />
+        </div>
+
+        {/* Instagram */}
+        <div>
+          <Label>LinkedIn</Label>
+          <Input 
+            type="url"
+            placeholder="Digite o link do seu LinkedIn"
+            value={inputs.linkedin}
+            onChange={(e) => setInputs({...inputs, linkedin: e.target.value})}
+          />
+        </div>
+
         {/* Instagram */}
         <div>
           <Label>Instagram</Label>
@@ -73,6 +101,17 @@ export function Networks() {
             placeholder="Digite o link do seu Instagram"
             value={inputs.instagram}
             onChange={(e) => setInputs({...inputs, instagram: e.target.value})}
+          />
+        </div>
+
+        {/* GitHub */}
+        <div>
+          <Label>GitHub</Label>
+          <Input 
+            type="url"
+            placeholder="Digite o link do seu GitHub"
+            value={inputs.github}
+            onChange={(e) => setInputs({...inputs, github: e.target.value})}
           />
         </div>
 
@@ -87,9 +126,9 @@ export function Networks() {
           />
         </div>
 
-        {/* Twitter */}
+        {/* X / Twitter */}
         <div>
-          <Label>Twitter</Label>
+          <Label>X / Twitter</Label>
           <Input 
             type="url"
             placeholder="Digite o link do seu Twitter"

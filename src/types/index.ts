@@ -13,6 +13,9 @@ export interface NetworkProps {
   facebook: string;
   twitter: string;
   youtube: string;
+  email: string;
+  github: string;
+  linkedin: string;
 }
 
 export interface SocialProps {

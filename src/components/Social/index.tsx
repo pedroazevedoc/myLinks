@@ -1,12 +1,17 @@
-import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
+import { FaFacebook, FaGithub, FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa";
 import type { SocialProps } from "../../types";
+import { SiGmail } from "react-icons/si";
+import { FaXTwitter } from "react-icons/fa6";
 
 // Mapeamento dos ícones das redes sociais
 const networksIconsMap = {
   instagram: <FaInstagram size={24} />,
   facebook: <FaFacebook size={24} />,
-  twitter: <FaTwitter size={24} />,
-  youtube: <FaYoutube size={24} />
+  x: <FaXTwitter size={24} />,
+  youtube: <FaYoutube size={24} />,
+  email: <SiGmail size={24} />,
+  github: <FaGithub size={24} />,
+  linkedin: <FaLinkedin size={24} />,
 };
 
 export function Social({ ...props }: SocialProps) {
